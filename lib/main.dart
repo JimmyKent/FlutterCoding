@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'scroller_page.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -104,6 +106,17 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headline4,
             ),
+            GestureDetector(
+              onTap:() {
+                Navigator.push(context, MaterialPageRoute<void>(
+                  builder: (_) {
+                    return ScrollerPage();
+                  },
+                ));
+
+              },
+              child: Text('Scroller Test'),
+            )
           ],
         ),
       ),
