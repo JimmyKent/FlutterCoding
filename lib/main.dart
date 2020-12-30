@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_coding/simple_bar_chart.dart';
 
+import 'line_chart.dart';
 import 'scroller_page.dart';
 
 void main() {
@@ -116,7 +118,29 @@ class _MyHomePageState extends State<MyHomePage> {
 
               },
               child: Text('Scroller Test'),
-            )
+            ),
+            GestureDetector(
+              onTap:() {
+                Navigator.push(context, MaterialPageRoute<void>(
+                  builder: (_) {
+                    return SimpleBarChart.withSampleData();
+                  },
+                ));
+
+              },
+              child: Text('SimpleBarChart'),
+            ),
+            GestureDetector(
+              onTap:() {
+                Navigator.push(context, MaterialPageRoute<void>(
+                  builder: (_) {
+                    return LineChart();
+                  },
+                ));
+
+              },
+              child: Text('LineChart'),
+            ),
           ],
         ),
       ),
