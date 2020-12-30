@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter_coding/countdown_opt.dart';
 import 'package:flutter_coding/simple_bar_chart.dart';
 
 import 'line_chart.dart';
 import 'scroller_page.dart';
 
 void main() {
+  debugProfileBuildsEnabled = true;
+  // 在Android和iOS真机不能出现paint图,模拟器可以
+  debugProfilePaintsEnabled = true;
+  debugPaintLayerBordersEnabled = true;
   runApp(MyApp());
 }
 
@@ -140,6 +146,17 @@ class _MyHomePageState extends State<MyHomePage> {
 
               },
               child: Text('LineChart'),
+            ),
+            GestureDetector(
+              onTap:() {
+                Navigator.push(context, MaterialPageRoute<void>(
+                  builder: (_) {
+                    return CountdownOptPage();
+                  },
+                ));
+
+              },
+              child: Text('Countdown optimization'),
             ),
           ],
         ),
