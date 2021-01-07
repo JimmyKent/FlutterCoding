@@ -59,16 +59,21 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   int _counter = 0;
+  bool playing = false;
+  AnimationController animCtrl;
+  Animation<double> animation;
+
+  @override
+  void initState() {
+    super.initState();
+    animCtrl = AnimationController(duration: const Duration(milliseconds: 500), vsync: this);
+    animation = Tween<double>(begin: 1.0, end: 0.0).animate(animCtrl);
+  }
 
   void _incrementCounter() {
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
       _counter++;
     });
   }
@@ -115,49 +120,60 @@ class _MyHomePageState extends State<MyHomePage> {
               style: Theme.of(context).textTheme.headline4,
             ),
             GestureDetector(
-              onTap:() {
+              onTap: () {
                 Navigator.push(context, MaterialPageRoute<void>(
                   builder: (_) {
                     return ScrollerPage();
                   },
                 ));
-
               },
               child: Text('Scroller Test'),
             ),
             GestureDetector(
-              onTap:() {
+              onTap: () {
                 Navigator.push(context, MaterialPageRoute<void>(
                   builder: (_) {
                     return SimpleBarChart.withSampleData();
                   },
                 ));
-
               },
               child: Text('SimpleBarChart'),
             ),
             GestureDetector(
-              onTap:() {
+              onTap: () {
                 Navigator.push(context, MaterialPageRoute<void>(
                   builder: (_) {
                     return LineChart();
                   },
                 ));
-
               },
               child: Text('LineChart'),
             ),
             GestureDetector(
-              onTap:() {
+              onTap: () {
                 Navigator.push(context, MaterialPageRoute<void>(
                   builder: (_) {
                     return CountdownOptPage();
                   },
                 ));
-
               },
               child: Text('Countdown optimization'),
             ),
+            LimitedBox(maxHeight: 20),
+            GestureDetector(
+              onTap: () {
+                if (playing) {
+                  animCtrl.forward();
+                } else {
+                  animCtrl.reverse();
+                }
+              },
+              child: AnimatedIcon(
+                icon: AnimatedIcons.play_pause,
+                color: Colors.orange,
+                progress: animation,
+              ),
+            )
           ],
         ),
       ),
