@@ -1,9 +1,14 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_coding/countdown_opt.dart';
 import 'package:flutter_coding/simple_bar_chart.dart';
 
+import 'font_size.dart';
 import 'line_chart.dart';
+import 'pixel/Inner_widgets_flutter_binding.dart';
+import 'pixel2/pixel_adapt.dart';
 import 'scroller_page.dart';
 
 void main() {
@@ -11,6 +16,12 @@ void main() {
   // 在Android和iOS真机不能出现paint图,模拟器可以
   debugProfilePaintsEnabled = true;
   debugPaintLayerBordersEnabled = true;
+  PixelAdapter.initWidth(1242);
+
+//  InnerWidgetsFlutterBinding.initPixel(1242, 3);
+//  InnerWidgetsFlutterBinding.ensureInitialized()
+//    ..attachRootWidget(MyApp())
+//    ..scheduleWarmUpFrame();
   runApp(MyApp());
 }
 
@@ -64,6 +75,8 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   bool playing = false;
   AnimationController animCtrl;
   Animation<double> animation;
+  final GlobalKey globalKey1 = GlobalKey();
+  final GlobalKey globalKey2 = GlobalKey();
 
   @override
   void initState() {
@@ -173,7 +186,52 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                 color: Colors.orange,
                 progress: animation,
               ),
-            )
+            ),
+            Container(
+              key: globalKey1, //指定获取宽高的key
+              width: 200,
+              height: 200,
+              color: Colors.blue,
+              alignment: Alignment.center,
+              child: Stack(
+                alignment: Alignment.topLeft,
+                children: [
+                  Container(
+                    width: 180.9.px,
+                    height: 180.9.px,
+                    color: Colors.orange,
+                  ),
+                  Container(
+                    width: 180.1.px,
+                    height: 180.1.px,
+                    color: Colors.white,
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              key: globalKey2, //指定获取宽高的key
+              width: 1000.9.px,
+              height: 10,
+              color: Colors.black,
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute<void>(
+                  settings: RouteSettings(),
+                  builder: (_) {
+                    return FontSize();
+                  },
+                ));
+                getWh();
+              },
+              child: Container(
+                width: 200,
+                height: 200,
+                color: Colors.brown,
+                child: Text('FontSize'),
+              ),
+            ),
           ],
         ),
       ),
@@ -183,5 +241,20 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+
+  double fromPixel(int num) {
+    return num.px;
+  }
+
+  void getWh() {
+    final containerWidth = globalKey1.currentContext.size.width;
+    final containerHeight = globalKey1.currentContext.size.height;
+    //FadeTransition width is 480.0, height is 100.0
+    print('width is $containerWidth, height is $containerHeight ');
+
+    final MediaQueryData mediaQuery = MediaQueryData.fromWindow(window);
+    print('width is ${mediaQuery.size}');
+    PixelAdapter.debugString();
   }
 }
