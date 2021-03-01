@@ -8,6 +8,8 @@ import 'package:flutter_coding/countdown_opt.dart';
 import 'package:flutter_coding/boosts/first_route_page.dart';
 import 'package:flutter_coding/simple_bar_chart.dart';
 
+import 'custom/PieChartPage.dart';
+import 'custom/circle_triangle_page.dart';
 import 'font_size.dart';
 import 'line_chart.dart';
 import 'pixel2/pixel_adapt.dart';
@@ -49,35 +51,35 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return WidgetsApp(
-      title: 'Flutter Boost example',
-      builder: FlutterBoost.init(postPush: _onRoutePushed),
-      color: Colors.white,
-      localizationsDelegates: [DefaultMaterialLocalizations.delegate],
-      onUnknownRoute: (RouteSettings settings) {
-        if (settings.name == "/") {
-          return unKnownRoute(settings);
-        }
-        return PageRouteBuilder<dynamic>(
-          pageBuilder: (BuildContext context, Animation<double> animation,
-              Animation<double> secondaryAnimation) {
-            return Material(
-              color: Colors.brown,
-              child: MyHomePage(title: 'Flutter Demo Home Page'),
-            );
-          },
-        );
-      },
-//        home: Container(),
-    );
-//    return MaterialApp(
-//      title: 'Flutter Demo',
-//      theme: ThemeData(
-//        primarySwatch: Colors.blue,
-//        visualDensity: VisualDensity.adaptivePlatformDensity,
-//      ),
-//      home: MyHomePage(title: 'Flutter Demo Home Page'),
-//    );
+//     return WidgetsApp(
+//       title: 'Flutter Boost example',
+//       builder: FlutterBoost.init(postPush: onRoutePushed),
+//       color: Colors.white,
+//       localizationsDelegates: [DefaultMaterialLocalizations.delegate],
+//       onUnknownRoute: (RouteSettings settings) {
+//         if (settings.name == "/") {
+//           return unKnownRoute(settings);
+//         }
+//         return PageRouteBuilder<dynamic>(
+//           pageBuilder: (BuildContext context, Animation<double> animation,
+//               Animation<double> secondaryAnimation) {
+//             return Material(
+//               color: Colors.brown,
+//               child: MyHomePage(title: 'Flutter Demo Home Page'),
+//             );
+//           },
+//         );
+//       },
+// //        home: Container(),
+//     );
+   return MaterialApp(
+     title: 'Flutter Demo',
+     theme: ThemeData(
+       primarySwatch: Colors.blue,
+       visualDensity: VisualDensity.adaptivePlatformDensity,
+     ),
+     home: MyHomePage(title: 'Flutter Demo Home Page'),
+   );
   }
 
   Route unKnownRoute(RouteSettings settings) {
@@ -108,7 +110,7 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  void _onRoutePushed(String pageName, String uniqueId, Map params, Route route, Future _) {}
+  void onRoutePushed(String pageName, String uniqueId, Map params, Route route, Future _) {}
 }
 
 class MyHomePage extends StatefulWidget {
@@ -249,7 +251,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                     MaterialPageRoute<void>(
                       settings: RouteSettings(),
                       builder: (_) {
-                        return FontSize();
+                        return PieChartPage();
                       },
                     ));
                 getWh();
